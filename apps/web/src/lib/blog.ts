@@ -2,7 +2,10 @@ import { allPosts } from "content-collections";
 import { sortBy } from "es-toolkit";
 import { Locales } from "intlayer";
 
-export function getBlogPosts(locale?: Locales, order: "asc" | "desc" = "asc") {
+export function getBlogPosts(
+  locale: Locales = Locales.ENGLISH,
+  order: "asc" | "desc" = "asc"
+) {
   let readyPosts = sortBy(allPosts, ["createdAt"]);
   readyPosts = order === "asc" ? readyPosts : readyPosts.reverse();
 
@@ -36,7 +39,7 @@ export async function getBlogPost(
 
 export function getLatestBlogPosts(
   limit = 4,
-  locale?: Locales,
+  locale: Locales = Locales.ENGLISH,
   order: "asc" | "desc" = "asc"
 ) {
   const posts = getBlogPosts(locale, order);
