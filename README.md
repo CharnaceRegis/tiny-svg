@@ -300,6 +300,28 @@ export default defineConfig({
 
 ## 🚀 Deployment
 
+### Why Vercel Instead of Cloudflare Workers?
+
+This project was initially built for Cloudflare Workers but has been migrated to Vercel due to runtime limitations with MDX content rendering.
+
+**Technical Reasons:**
+
+1. **MDX Runtime Restrictions**: MDX uses `eval()` and `new Function()` to compile and render content at runtime. Cloudflare Workers have strict security policies that prohibit these JavaScript evaluation methods for security reasons.
+
+2. **SSR Failures**: When blog MDX content is processed during Server-Side Rendering (SSR), Cloudflare Workers throw runtime errors due to the `eval()` restriction. This causes the rendering to fall back to Client-Side Rendering (CSR).
+
+3. **SEO Impact**: The fallback to CSR means:
+   - Search engines receive empty or incomplete HTML
+   - Blog content is not indexed properly
+   - Meta tags and Open Graph data are not available during initial page load
+   - Page performance scores decrease due to content shifting
+
+4. **Content Security Policy**: Cloudflare Workers enforce a strict Content Security Policy (CSP) that prevents dynamic code execution, which is essential for MDX compilation.
+
+Vercel's Node.js runtime environment fully supports these features, allowing proper SSR for all MDX content, maintaining SEO benefits and optimal performance.
+
+---
+
 ### Vercel (Recommended)
 
 This project is configured for Vercel deployment with full SSR support.
