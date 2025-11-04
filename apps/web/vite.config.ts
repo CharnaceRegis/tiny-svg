@@ -14,21 +14,6 @@ export default defineConfig(({ mode }) => ({
     intlayerMiddleware(),
     tsconfigPaths(),
     tanstackStart({
-      prerender: {
-        // Enable prerendering for static pages
-        // Cloudflare Pages will serve prerendered HTML files directly
-        // Dynamic routes will fall back to SSR via Cloudflare Functions
-        enabled: mode === "production",
-        crawlLinks: true,
-        // FIX: ignore worker error
-        failOnError: false,
-
-        // Callback when page is successfully rendered
-        onSuccess: ({ page }) => {
-          // biome-ignore lint/suspicious/noConsole: logging prerender progress
-          console.info(`✓ Prerendered ${page.path}`);
-        },
-      },
       sitemap: {
         host: "https://tiny-svg.actnow.dev",
       },
@@ -39,12 +24,11 @@ export default defineConfig(({ mode }) => ({
       },
     }),
     tailwindcss(),
-    mode === "production" &&
-      cloudflare({
-        viteEnvironment: { name: "ssr" },
-        persistState: true,
-      }),
-  ].filter(Boolean),
+    cloudflare({
+      viteEnvironment: { name: "ssr" },
+      persistState: mode === "production",
+    }),
+  ],
   build: {
     rollupOptions: {
       output: {
