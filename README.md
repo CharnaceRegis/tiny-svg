@@ -430,7 +430,7 @@ apps/web/.output/
 
 ## TODO
 
-- [ ] upload header block (uploaded after, then reupload)
+- [x] Upload header block (uploaded after, then reupload)
 - [ ] Data URL tab (minified Data URI, base64, encodeURIComponent)
 - [ ] SVG share (share name, link expires - need server storage)
 - [ ] SVG history (list, use, LocalStorage)

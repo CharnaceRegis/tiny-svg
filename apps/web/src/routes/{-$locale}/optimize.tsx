@@ -100,6 +100,7 @@ function OptimizeLayout({
             isSettingsCollapsed={isCollapsed}
             onCopy={onCopy}
             onDownload={onDownload}
+            onFileUpload={onFileUpload}
             onToggleSettings={onToggleSettings}
             originalSize={originalSize}
           />

@@ -2,6 +2,7 @@ import { useIntlayer } from "react-intlayer";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatBytes } from "@/lib/svgo-config";
+import { CompactUploadButton } from "./compact-upload-button";
 
 type OptimizeHeaderProps = {
   fileName: string;
@@ -11,6 +12,7 @@ type OptimizeHeaderProps = {
   compressedSvg: string;
   onCopy: () => void;
   onDownload: () => void;
+  onFileUpload: (file: File) => void;
   isSettingsCollapsed?: boolean;
   onToggleSettings?: () => void;
 };
@@ -23,6 +25,7 @@ export function OptimizeHeader({
   compressedSvg,
   onCopy,
   onDownload,
+  onFileUpload,
   isSettingsCollapsed,
   onToggleSettings,
 }: OptimizeHeaderProps) {
@@ -31,9 +34,14 @@ export function OptimizeHeader({
   return (
     <div className="border-b bg-muted/30 p-4">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1">
-          <h1 className="hidden font-bold text-xl md:block">{header.title}</h1>
-          <p className="text-muted-foreground text-sm">{fileName}</p>
+        <div className="flex items-center gap-2">
+          <CompactUploadButton onUpload={onFileUpload} />
+          <div className="flex flex-col">
+            <h1 className="hidden font-bold text-base md:block">
+              {header.title}
+            </h1>
+            <p className="text-muted-foreground text-sm">{fileName}</p>
+          </div>
         </div>
         <div className="flex items-center gap-2">
           <div className="text-right text-sm">

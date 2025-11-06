@@ -44,9 +44,6 @@ export default defineConfig(({ mode }) => ({
           return false;
         },
         failOnError: true,
-        onSuccess: ({ page }) => {
-          console.info("Prerendering completed", page.path);
-        },
       },
       pages: [
         ...[

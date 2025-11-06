@@ -28,6 +28,12 @@ const optimizeContent = {
         ko: "다운로드",
         de: "Herunterladen",
       }),
+      reupload: t({
+        en: "Reupload",
+        zh: "重新上传",
+        ko: "다시 업로드",
+        de: "Erneut hochladen",
+      }),
     },
     buttons: {
       copy: t({
