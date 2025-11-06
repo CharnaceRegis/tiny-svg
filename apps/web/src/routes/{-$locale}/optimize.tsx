@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { CodeDiffViewerLazy } from "@/components/lazy/code-diff-viewer-lazy";
 import { ConfigPanelLazy } from "@/components/lazy/config-panel-lazy";
 import { CodeTabContent } from "@/components/optimize/code-tab-content";
+import { DataUriTabContent } from "@/components/optimize/data-uri-tab-content";
 import { OptimizeHeader } from "@/components/optimize/optimize-header";
 import { SvgPreview } from "@/components/svg-preview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -198,6 +199,9 @@ function OptimizeTabs({
           {ui?.optimizedTab || "Optimized"}
         </TabsTrigger>
         <TabsTrigger value="code">{ui?.codeTab || "Code"}</TabsTrigger>
+        <TabsTrigger disabled={!compressedSvg} value="data-uri">
+          {ui?.dataUriTab || "Data URI"}
+        </TabsTrigger>
         <TabsTrigger value="react-jsx">React JSX</TabsTrigger>
         <TabsTrigger value="react-tsx">React TSX</TabsTrigger>
         <TabsTrigger value="vue">Vue</TabsTrigger>
@@ -248,6 +252,10 @@ function OptimizeTabs({
             {ui?.noOptimizedCode || "No optimized code yet"}
           </div>
         )}
+      </TabsContent>
+
+      <TabsContent className="mt-0 flex-1 overflow-hidden" value="data-uri">
+        <DataUriTabContent compressedSvg={compressedSvg} />
       </TabsContent>
 
       {[

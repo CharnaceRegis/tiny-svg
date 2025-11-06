@@ -236,6 +236,12 @@ const optimizeContent = {
         ko: "코드",
         de: "Code",
       }),
+      dataUriTab: t({
+        en: "Data URI",
+        zh: "Data URI",
+        ko: "Data URI",
+        de: "Data URI",
+      }),
       clickToCompress: t({
         en: 'Click "Compress SVG" to optimize',
         zh: '点击"压缩 SVG"进行优化',
