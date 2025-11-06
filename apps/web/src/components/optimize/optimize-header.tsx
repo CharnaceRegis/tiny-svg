@@ -35,7 +35,7 @@ export function OptimizeHeader({
     <div className="border-b bg-muted/30 p-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <CompactUploadButton onUpload={onFileUpload} />
+          <CompactUploadButton className="py-5" onUpload={onFileUpload} />
           <div className="flex flex-col">
             <h1 className="hidden font-bold text-base md:block">
               {header.title}
