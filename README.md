@@ -137,6 +137,7 @@ pnpm check-types
 ### Optimization & Processing
 - **[SVGO](https://github.com/svg/svgo)** - SVG optimization engine
 - **[Prettier](https://prettier.io/)** - Code formatter for generated code
+- **[Refractor](https://github.com/wooorm/refractor)** - Lightweight syntax highlighting
 - **[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)** - Multi-threaded processing
 
 ### Code Quality
@@ -177,16 +178,22 @@ Generate optimized code for your favorite framework:
   - Transparent Dark (dark checkerboard)
   - Solid Light (white)
   - Solid Dark (dark gray)
-- **Zoom Controls**: 10% - 200% zoom range
+- **Interactive Controls**:
+  - Zoom: 10% - 200% zoom range
+  - Pan: Click and drag to move SVG around
+  - Rotate: 90°, 180°, 270° rotation
+  - Flip: Horizontal and vertical flip
+  - Resize: Adjust width and height (proportional scaling)
 - **Side-by-Side Comparison**: Compare original vs optimized
-- **Code Diff View**: Monaco-powered diff editor
+- **Code Diff View**: Refractor-powered syntax highlighting with side-by-side diff
 
 ### Performance Optimizations
 
 - **Web Workers**: SVGO, Prettier, and code generation run in separate threads
 - **Lazy Loading**: Components load on-demand
-- **Code Splitting**: Optimized bundle chunking (monaco, prettier, svgo, ui)
+- **Code Splitting**: Optimized bundle chunking (refractor, prettier, svgo, ui)
 - **Result Caching**: Smart LRU cache with 5-minute TTL
+- **Lightweight Syntax Highlighting**: Refractor instead of Monaco Editor (~200KB reduction)
 - **Optimized Bundle**: Main optimize route only 15.79 KB (97.4% reduction)
 
 ---
@@ -260,11 +267,23 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          monaco: ['@monaco-editor/react', 'monaco-editor'],
-          prettier: ['prettier/standalone', /* ... */],
-          svgo: ['svgo'],
-          ui: ['@radix-ui/*'],
+        manualChunks(id) {
+          // Refractor - syntax highlighting (~80KB)
+          if (id.includes('refractor')) {
+            return 'refractor';
+          }
+          // Prettier (~200KB)
+          if (id.includes('prettier/standalone') || /* ... */) {
+            return 'prettier';
+          }
+          // SVGO (~6KB)
+          if (id.includes('svgo')) {
+            return 'svgo';
+          }
+          // UI components
+          if (id.includes('@radix-ui')) {
+            return 'ui';
+          }
         },
       },
     },
@@ -411,7 +430,7 @@ apps/web/.output/
 ├── public/              # Static assets (served by Vercel)
 │   ├── assets/         # JS/CSS bundles
 │   │   ├── index-*.js   # Main bundle (~15.79 KB)
-│   │   ├── monaco-*.js  # Monaco Editor (~500 KB)
+│   │   ├── refractor-*.js # Refractor syntax highlighting (~80 KB)
 │   │   ├── prettier-*.js # Prettier (~200 KB)
 │   │   ├── svgo-*.js    # SVGO (~6 KB)
 │   │   └── ui-*.js      # UI components
@@ -422,8 +441,9 @@ apps/web/.output/
 
 **Bundle Optimization**:
 - Main route: 15.79 KB (97.4% reduction from 611.74 KB)
-- Code splitting: Monaco, Prettier, SVGO, and UI in separate chunks
+- Code splitting: Refractor, Prettier, SVGO, and UI in separate chunks
 - Lazy loading: Components load on-demand
+- Lightweight syntax highlighting: Refractor replaces Monaco Editor (~200KB saved)
 - Web Workers: CPU-intensive tasks run in separate threads
 
 ---
@@ -432,10 +452,12 @@ apps/web/.output/
 
 - [x] Upload header block (uploaded after, then reupload)
 - [x] Data URL tab (minified Data URI, base64, encodeURIComponent)
+- [x] SVG Grab move, scale (pan and zoom controls)
+- [x] SVG rotation, horizontal flip, vertical flip, width and height adjustment (proportional)
+- [x] Replace Monaco Editor with lightweight syntax highlighting (Refractor)
+- [x] Add shadcn diff-viewer for code comparison
 - [ ] SVG share (share name, link expires - need server storage)
 - [ ] SVG history (list, use, LocalStorage)
-- [x] SVG Grab move, scale
-- [x] SVG rotation, horizontal flip, vertical flip, width and height adjustment (proportional)
 - [ ] SVG setting attrs demo (hover attrs show demo image or motion demo)
 - [ ] SVG collection (list, server storage)
 - [ ] SVG AI find (AI recognizes SVG images, provides descriptive keywords, and performs searches.)
