@@ -133,9 +133,16 @@ const getSvgDimensions = (svg: string): { width: number; height: number } => {
 
 export const exportAsPng = async (
   svg: string,
-  fileName: string
+  fileName: string,
+  customWidth?: number,
+  customHeight?: number
 ): Promise<void> => {
-  const { width, height } = getSvgDimensions(svg);
+  const svgDimensions = getSvgDimensions(svg);
+  const width =
+    customWidth && customWidth > 0 ? customWidth : svgDimensions.width;
+  const height =
+    customHeight && customHeight > 0 ? customHeight : svgDimensions.height;
+
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
@@ -193,9 +200,16 @@ export const exportAsPng = async (
 export const exportAsJpeg = async (
   svg: string,
   fileName: string,
-  quality = 0.95
+  quality = 0.95,
+  customWidth?: number,
+  customHeight?: number
 ): Promise<void> => {
-  const { width, height } = getSvgDimensions(svg);
+  const svgDimensions = getSvgDimensions(svg);
+  const width =
+    customWidth && customWidth > 0 ? customWidth : svgDimensions.width;
+  const height =
+    customHeight && customHeight > 0 ? customHeight : svgDimensions.height;
+
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;

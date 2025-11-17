@@ -153,6 +153,24 @@ const optimizeContent = {
           ko: "JPEGとして내보내기",
           de: "Als JPEG exportieren",
         }),
+        scale: t({
+          en: "Scale",
+          zh: "比例",
+          ko: "비율",
+          de: "Maßstab",
+        }),
+        width: t({
+          en: "Width",
+          zh: "宽度",
+          ko: "너비",
+          de: "Breite",
+        }),
+        height: t({
+          en: "Height",
+          zh: "高度",
+          ko: "높이",
+          de: "Höhe",
+        }),
       },
     },
     messages: {
