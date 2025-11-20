@@ -19,9 +19,11 @@ type HistoryPanelProps = {
   onSelectEntry: (entry: HistoryEntry) => void;
   onDeleteEntry: (id: string) => void;
   onClearAll: () => void;
-  title?: string;
-  emptyMessage?: string;
-  clearAllLabel?: string;
+  title: string;
+  emptyMessage: string;
+  clearAllLabel: string;
+  closeLabel: string;
+  deleteLabel: string;
 };
 
 export function HistoryPanel({
@@ -31,9 +33,11 @@ export function HistoryPanel({
   onSelectEntry,
   onDeleteEntry,
   onClearAll,
-  title = "History",
-  emptyMessage = "No saved SVGs yet",
-  clearAllLabel = "Clear All",
+  title,
+  emptyMessage,
+  clearAllLabel,
+  closeLabel,
+  deleteLabel,
 }: HistoryPanelProps) {
   return (
     <Sheet onOpenChange={onClose} open={isOpen}>
@@ -47,14 +51,15 @@ export function HistoryPanel({
                   onClick={onClearAll}
                   size="sm"
                   type="button"
-                  variant="outline"
+                  variant="destructive"
                 >
                   {clearAllLabel}
                 </Button>
               )}
               <SheetClose asChild>
-                <Button size="sm" type="button" variant="ghost">
-                  <span className="i-hugeicons-cancel-01 size-4" />
+                <Button size="sm" type="button" variant="outline">
+                  <span className="i-hugeicons-cancel-01 mr-1.5 size-4" />
+                  {closeLabel}
                 </Button>
               </SheetClose>
             </div>
@@ -70,7 +75,7 @@ export function HistoryPanel({
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-4 gap-3">
               {entries.map((entry, index) => (
                 <div
                   className={cn(
@@ -118,12 +123,14 @@ export function HistoryPanel({
                     )}
                   </div>
                   <Button
+                    aria-label={deleteLabel}
                     className="absolute top-1 right-1 size-6 opacity-0 transition-opacity group-hover:opacity-100"
                     onClick={(e) => {
                       e.stopPropagation();
                       onDeleteEntry(entry.id);
                     }}
                     size="icon"
+                    title={deleteLabel}
                     type="button"
                     variant="destructive"
                   >

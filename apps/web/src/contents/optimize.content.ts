@@ -60,6 +60,12 @@ const optimizeContent = {
         ko: "모두 지우기",
         de: "Alle löschen",
       }),
+      close: t({
+        en: "Close",
+        zh: "关闭",
+        ko: "닫기",
+        de: "Schließen",
+      }),
       delete: t({
         en: "Delete",
         zh: "删除",

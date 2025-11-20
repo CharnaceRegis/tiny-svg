@@ -137,6 +137,8 @@ export function OptimizeLayout({
       {/* History Panel */}
       <HistoryPanel
         clearAllLabel={ui?.history?.clearAll || "Clear All"}
+        closeLabel={ui?.history?.close || "Close"}
+        deleteLabel={ui?.history?.delete || "Delete"}
         emptyMessage={ui?.history?.empty || "No saved SVGs yet"}
         entries={historyEntries}
         isOpen={isHistoryPanelOpen}
