@@ -119,14 +119,14 @@ export function HistoryPanel({
                     </div>
                   </div>
                   <Button
-                    aria-label={history.delete}
+                    aria-label={String(history.delete)}
                     className="absolute top-1 right-1 size-6 opacity-0 transition-opacity group-hover:opacity-100"
                     onClick={(e) => {
                       e.stopPropagation();
                       onDeleteEntry(entry.id);
                     }}
                     size="icon"
-                    title={history.delete}
+                    title={String(history.delete)}
                     type="button"
                     variant="destructive"
                   >
