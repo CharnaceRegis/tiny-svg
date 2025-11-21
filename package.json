@@ -8,10 +8,10 @@
   ],
   "scripts": {
     "check": "biome check --write .",
-    "dev": "bun --filter '*' dev",
-    "build": "bun --filter '*' build",
-    "check-types": "bun --filter '*' check-types",
-    "dev:web": "bun --filter web dev"
+    "dev": "pnpm --filter '*' dev",
+    "build": "pnpm --filter '*' build",
+    "check-types": "pnpm --filter '*' check-types",
+    "dev:web": "pnpm --filter web dev"
   },
   "dependencies": {
     "dotenv": "^17.2.2"
