@@ -8,7 +8,13 @@ import { useDragAndDrop } from "@/hooks/use-drag-and-drop";
 import { usePasteHandler } from "@/hooks/use-paste-handler";
 import { usePrettifiedSvg } from "@/hooks/use-prettified-svg";
 import { useSvgHistory } from "@/hooks/use-svg-history";
-import { copyToClipboard, downloadSvg, readFileAsText } from "@/lib/file-utils";
+import {
+  copyToClipboard,
+  downloadSvg,
+  isSvgContent,
+  isSvgFile,
+  readFileAsText,
+} from "@/lib/file-utils";
 import type { HistoryEntry } from "@/lib/svg-history-storage";
 import { getComponentName } from "@/lib/svg-to-code";
 import { calculateCompressionRate } from "@/lib/svgo-config";
@@ -67,19 +73,69 @@ export function useOptimizePage() {
     setActiveTab
   );
 
+  const safeMessages = useMemo(
+    () => ({
+      uploadSuccess:
+        messages?.uploadSuccess || "SVG file uploaded successfully!",
+      invalidSvgFile:
+        messages?.invalidSvgFile ||
+        "Invalid file. Please select a valid SVG file (.svg).",
+      fileReadError:
+        messages?.fileReadError || "Failed to read file. Please try again.",
+      invalidSvgStructure:
+        messages?.invalidSvgStructure ||
+        "The file does not contain valid SVG content.",
+    }),
+    [
+      messages?.uploadSuccess,
+      messages?.invalidSvgFile,
+      messages?.fileReadError,
+      messages?.invalidSvgStructure,
+    ]
+  );
+
   const handleFileUpload = useCallback(
     async (file: File) => {
       const content = await readFileAsText(file);
       setOriginalSvg(content, file.name);
       setHasAutoSwitchedTab(false);
-      toast.success(
-        messages?.uploadSuccess || "SVG file uploaded successfully!"
-      );
+      toast.success(safeMessages.uploadSuccess);
     },
-    [setOriginalSvg, setHasAutoSwitchedTab, messages?.uploadSuccess]
+    [setOriginalSvg, setHasAutoSwitchedTab, safeMessages.uploadSuccess]
   );
 
-  const isDragging = useDragAndDrop();
+  // Handle drag and drop with file validation
+  const handleFileDrop = useCallback(
+    async (file: File) => {
+      // Validate file type
+      if (!isSvgFile(file)) {
+        toast.error(safeMessages.invalidSvgFile);
+        return;
+      }
+
+      // Read and validate content
+      try {
+        const content = await readFileAsText(file);
+        if (!isSvgContent(content)) {
+          toast.error(safeMessages.invalidSvgStructure);
+          return;
+        }
+        setOriginalSvg(content, file.name);
+        setHasAutoSwitchedTab(false);
+        toast.success(safeMessages.uploadSuccess);
+      } catch {
+        toast.error(safeMessages.fileReadError);
+      }
+    },
+    [setOriginalSvg, setHasAutoSwitchedTab, safeMessages]
+  );
+
+  const dragDropOptions = useMemo(
+    () => ({ onFileDrop: handleFileDrop }),
+    [handleFileDrop]
+  );
+
+  const isDragging = useDragAndDrop(dragDropOptions);
 
   usePasteHandler({
     setOriginalSvg,

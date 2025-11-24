@@ -1,7 +1,8 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import type { Locales } from "intlayer";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useIntlayer } from "react-intlayer";
+import { toast } from "sonner";
 import { LocalizedLink } from "@/components/intlayer/localized-link";
 import { RecentSvgs } from "@/components/recent-svgs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +11,7 @@ import { useDragAndDrop } from "@/hooks/use-drag-and-drop";
 import { usePasteHandler } from "@/hooks/use-paste-handler";
 import { useSvgHistory } from "@/hooks/use-svg-history";
 import { getLatestBlogPosts } from "@/lib/blog";
-import { readFileAsText } from "@/lib/file-utils";
+import { isSvgContent, isSvgFile, readFileAsText } from "@/lib/file-utils";
 import { useSvgStore } from "@/store/svg-store";
 
 const LATEST_POSTS_COUNT = 4;
@@ -34,6 +35,12 @@ function HomeComponent() {
   const { hero, features, blog, messages } = useIntlayer("home");
   const { recentEntries } = useSvgHistory();
 
+  const safeMessages = messages || {
+    invalidSvgFile: "Invalid file. Please select a valid SVG file (.svg).",
+    fileReadError: "Failed to read file. Please try again.",
+    invalidSvgStructure: "The file does not contain valid SVG content.",
+  };
+
   const handleFileUpload = useCallback(
     async (file: File) => {
       const content = await readFileAsText(file);
@@ -43,7 +50,37 @@ function HomeComponent() {
     [setOriginalSvg, navigate]
   );
 
-  const isDragging = useDragAndDrop();
+  // Handle drag and drop with file validation
+  const handleFileDrop = useCallback(
+    async (file: File) => {
+      // Validate file type
+      if (!isSvgFile(file)) {
+        toast.error(safeMessages.invalidSvgFile);
+        return;
+      }
+
+      // Read and validate content
+      try {
+        const content = await readFileAsText(file);
+        if (!isSvgContent(content)) {
+          toast.error(safeMessages.invalidSvgStructure);
+          return;
+        }
+        setOriginalSvg(content, file.name);
+        await navigate({ to: "/{-$locale}/optimize" });
+      } catch {
+        toast.error(safeMessages.fileReadError);
+      }
+    },
+    [setOriginalSvg, navigate, safeMessages]
+  );
+
+  const dragDropOptions = useMemo(
+    () => ({ onFileDrop: handleFileDrop }),
+    [handleFileDrop]
+  );
+
+  const isDragging = useDragAndDrop(dragDropOptions);
 
   usePasteHandler({
     setOriginalSvg,

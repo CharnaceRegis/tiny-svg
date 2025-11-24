@@ -308,6 +308,24 @@ const optimizeContent = {
         ko: "내보낼 최적화된 SVG가 없습니다",
         de: "Keine optimierte SVG zum Exportieren",
       }),
+      invalidSvgFile: t({
+        en: "Invalid file. Please select a valid SVG file (.svg).",
+        zh: "无效的文件。请选择有效的 SVG 文件 (.svg)。",
+        ko: "유효하지 않은 파일입니다. 유효한 SVG 파일(.svg)을 선택해주세요.",
+        de: "Ungültige Datei. Bitte wählen Sie eine gültige SVG-Datei (.svg).",
+      }),
+      fileReadError: t({
+        en: "Failed to read file. Please try again.",
+        zh: "读取文件失败。请重试。",
+        ko: "파일을 읽는 데 실패했습니다. 다시 시도해주세요.",
+        de: "Datei konnte nicht gelesen werden. Bitte versuchen Sie es erneut.",
+      }),
+      invalidSvgStructure: t({
+        en: "The file does not contain valid SVG content.",
+        zh: "该文件不包含有效的 SVG 内容。",
+        ko: "파일에 유효한 SVG 내용이 없습니다.",
+        de: "Die Datei enthält keinen gültigen SVG-Inhalt.",
+      }),
     },
     ui: {
       settings: t({

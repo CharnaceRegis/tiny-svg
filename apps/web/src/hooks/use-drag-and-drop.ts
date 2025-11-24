@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 
-export function useDragAndDrop() {
+type UseDragAndDropOptions = {
+  onFileDrop?: (file: File) => void;
+};
+
+export function useDragAndDrop(options?: UseDragAndDropOptions) {
   const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
@@ -23,6 +27,14 @@ export function useDragAndDrop() {
     const handleDrop = (e: DragEvent) => {
       e.preventDefault();
       setIsDragging(false);
+
+      // Handle dropped files
+      if (options?.onFileDrop && e.dataTransfer?.files.length) {
+        const file = e.dataTransfer.files[0];
+        if (file) {
+          options.onFileDrop(file);
+        }
+      }
     };
 
     document.addEventListener("dragenter", handleDragEnter);
@@ -36,7 +48,7 @@ export function useDragAndDrop() {
       document.removeEventListener("dragover", handleDragOver);
       document.removeEventListener("drop", handleDrop);
     };
-  }, []);
+  }, [options]);
 
   return isDragging;
 }

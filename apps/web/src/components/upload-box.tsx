@@ -1,6 +1,9 @@
+import type { ReactNode } from "react";
+import { useCallback } from "react";
 import { useIntlayer } from "react-intlayer";
+import { toast } from "sonner";
 import { useFilePicker } from "use-file-picker";
-import { isSvgFile } from "@/lib/file-utils";
+import { isSvgContent, isSvgFile, readFileAsText } from "@/lib/file-utils";
 import { cn } from "@/lib/utils";
 
 type UploadBoxProps = {
@@ -9,12 +12,41 @@ type UploadBoxProps = {
   className?: string;
 };
 
+type SafeMessages = {
+  invalidSvgFile: ReactNode;
+  fileReadError: ReactNode;
+  invalidSvgStructure: ReactNode;
+  uploadSuccess: ReactNode;
+};
+
+async function validateAndProcessFile(
+  file: File,
+  onUpload: (f: File) => void,
+  safeMessages: SafeMessages
+): Promise<void> {
+  if (!isSvgFile(file)) {
+    toast.error(safeMessages.invalidSvgFile);
+    return;
+  }
+
+  try {
+    const content = await readFileAsText(file);
+    if (!isSvgContent(content)) {
+      toast.error(safeMessages.invalidSvgStructure);
+      return;
+    }
+    onUpload(file);
+  } catch {
+    toast.error(safeMessages.fileReadError);
+  }
+}
+
 export function UploadBox({
   onUpload,
   isHighlighted = false,
   className,
 }: UploadBoxProps) {
-  const { upload } = useIntlayer("home");
+  const { upload, messages } = useIntlayer("home");
 
   // 提供默认值，防止服务器端渲染错误
   const safeUpload = upload || {
@@ -26,21 +58,36 @@ export function UploadBox({
     acceptsOnly: "Accepts .svg files only",
   };
 
-  const { openFilePicker, loading } = useFilePicker({
-    accept: ".svg",
-    multiple: false,
-    onFilesSelected: (data: {
+  const safeMessages: SafeMessages = messages || {
+    invalidSvgFile: "Invalid file. Please select a valid SVG file (.svg).",
+    fileReadError: "Failed to read file. Please try again.",
+    invalidSvgStructure: "The file does not contain valid SVG content.",
+    uploadSuccess: "SVG uploaded successfully!",
+  };
+
+  const handleFilesSelected = useCallback(
+    async (data: {
       plainFiles?: File[];
       filesContent?: unknown[];
       errors?: unknown[];
     }) => {
-      if (data.plainFiles && data.plainFiles.length > 0) {
-        const file = data.plainFiles[0];
-        if (file && isSvgFile(file)) {
-          onUpload(file);
-        }
+      if (data.errors && data.errors.length > 0) {
+        toast.error(safeMessages.invalidSvgFile);
+        return;
+      }
+
+      const file = data.plainFiles?.[0];
+      if (file) {
+        await validateAndProcessFile(file, onUpload, safeMessages);
       }
     },
+    [onUpload, safeMessages]
+  );
+
+  const { openFilePicker, loading } = useFilePicker({
+    accept: ".svg",
+    multiple: false,
+    onFilesSelected: handleFilesSelected,
   });
 
   return (
