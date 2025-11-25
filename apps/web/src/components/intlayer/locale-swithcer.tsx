@@ -14,6 +14,7 @@ const localeFlags: Partial<Record<Locales, string>> = {
   [Locales.CHINESE]: "🇨🇳",
   [Locales.KOREAN]: "🇰🇷",
   [Locales.GERMAN]: "🇩🇪",
+  [Locales.FRENCH_FRANCE]: "🇫🇷",
 };
 
 const TRAILING_SLASH_REGEX = /\/$/;
