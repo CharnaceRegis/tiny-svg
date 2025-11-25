@@ -78,6 +78,10 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
     );
 
   const [showSizeAdjuster, setShowSizeAdjuster] = useState(false);
+  const [showViewBoxOutline, setShowViewBoxOutline] = useLocalStorage(
+    "svg-preview-viewbox-outline",
+    false
+  );
   const { applyTransformation } = useSvgStore();
 
   const cycleBackground = () => {
@@ -180,6 +184,22 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
           </div>
           <div className="mx-1 h-4 w-px bg-border" />
           <Button
+            onClick={() => setShowViewBoxOutline(!showViewBoxOutline)}
+            size="sm"
+            title="Show viewBox outline"
+            type="button"
+            variant="outline"
+          >
+            <i
+              className={cn(
+                "size-4",
+                showViewBoxOutline
+                  ? "i-hugeicons-border-none-01"
+                  : "i-hugeicons-border-none-02"
+              )}
+            />
+          </Button>
+          <Button
             onClick={cycleBackground}
             size="sm"
             title={BACKGROUND_STYLES[backgroundStyle].label}
@@ -247,7 +267,10 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
           }}
         >
           <div
-            className="pointer-events-none select-none"
+            className={cn(
+              "pointer-events-none relative select-none",
+              showViewBoxOutline && "svg-view-outline"
+            )}
             dangerouslySetInnerHTML={{ __html: svg }}
             style={{
               transform: `scale(${zoom / ZOOM_SCALE_DIVISOR})`,
