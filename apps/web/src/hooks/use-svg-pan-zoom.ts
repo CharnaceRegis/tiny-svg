@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 const DEFAULT_ZOOM = 100;
-const MAX_ZOOM = 400;
+const MAX_ZOOM = 800;
 const MIN_ZOOM = 20;
 const ZOOM_STEP = 20;
 const WHEEL_ZOOM_STEP = 10;

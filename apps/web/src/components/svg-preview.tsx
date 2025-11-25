@@ -201,7 +201,7 @@ export function SvgPreview({ svg, title, className }: SvgPreviewProps) {
           >
             <i className="i-hugeicons-zoom-out-area size-4" />
           </Button>
-          <span className="min-w-12 px-2 text-center text-muted-foreground text-xs">
+          <span className="w-16 px-2 text-center font-mono text-muted-foreground text-xs">
             {zoom}%
           </span>
           <Button
