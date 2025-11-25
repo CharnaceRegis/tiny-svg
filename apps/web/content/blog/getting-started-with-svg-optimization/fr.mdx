@@ -1,0 +1,86 @@
+---
+title: Commencer avec l'optimisation SVG
+desc: Apprenez à optimiser vos fichiers SVG pour de meilleures performances et des tailles de fichiers plus petites
+cover: https://images.unsplash.com/photo-1558403194-611308249627?w=800&h=400&fit=crop
+datetime: 2025-01-15
+---
+
+# Commencer avec l'optimisation SVG
+
+Les fichiers SVG (Scalable Vector Graphics) sont des ressources puissantes pour le développement web moderne, mais ils contiennent souvent des données inutiles qui peuvent ralentir votre site web. Dans ce guide, nous explorerons comment optimiser efficacement les fichiers SVG.
+
+## Pourquoi optimiser les fichiers SVG ?
+
+Les fichiers SVG exportés depuis les outils de conception comme Figma, Sketch ou Adobe Illustrator contiennent souvent :
+
+- Métadonnées et commentaires masqués
+- Définitions et groupes inutilisés
+- Attributs redondants
+- Données de chemin inefficaces
+- Valeurs par défaut qui peuvent être omises
+
+En optimisant ces fichiers, vous pouvez :
+
+1. **Réduire la taille du fichier** de 30-70%
+2. **Améliorer les temps de chargement de page**
+3. **Améliorer les performances de rendu**
+4. **Rendre votre code SVG plus maintenable**
+
+## Techniques d'optimisation de base
+
+### Supprimer les métadonnées inutiles
+
+La plupart des outils de conception ajoutent des métadonnées dont les navigateurs n'ont pas besoin :
+
+```xml
+<!-- Avant -->
+<svg xmlns:xlink="http://www.w3.org/1999/xlink"
+     xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+  <!-- contenu -->
+</svg>
+
+<!-- Après -->
+<svg>
+  <!-- contenu -->
+</svg>
+```
+
+### Simplifier les chemins
+
+Les données de chemin peuvent souvent être simplifiées sans changements visuels :
+
+```xml
+<!-- Avant -->
+<path d="M10.000,10.000 L20.000,20.000" />
+
+<!-- Après -->
+<path d="M10 10L20 20" />
+```
+
+### Supprimer les valeurs par défaut
+
+De nombreux attributs ont des valeurs par défaut qui n'ont pas besoin d'être spécifiées :
+
+```xml
+<!-- Avant -->
+<rect fill="black" stroke="none" />
+
+<!-- Après -->
+<rect />
+```
+
+## Utiliser Tiny SVG
+
+Notre outil rend l'optimisation sans effort :
+
+1. **Téléchargez ou collez** votre fichier SVG
+2. **Prévisualisez** avant et après
+3. **Téléchargez** la version optimisée
+
+Tout le traitement se fait dans votre navigateur - vos fichiers ne quittent jamais votre appareil !
+
+## Conclusion
+
+L'optimisation SVG est une étape essentielle dans le développement web moderne. Avec les bons outils, vous pouvez réduire considérablement les tailles de fichiers tout en maintenant une qualité visuelle parfaite.
+
+Commencez à optimiser vos fichiers SVG dès aujourd'hui et voyez la différence !

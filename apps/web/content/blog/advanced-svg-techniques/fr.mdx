@@ -1,0 +1,135 @@
+---
+title: Techniques SVG avancées pour les développeurs web
+desc: Explorez des techniques SVG avancées incluant les animations, les filtres et l'optimisation des performances
+cover: https://images.unsplash.com/photo-1587620962725-abab7fe55159?w=800&h=400&fit=crop
+datetime: 2025-01-05
+---
+
+# Techniques SVG avancées pour les développeurs web
+
+Une fois que vous maîtrisez les bases du SVG, il est temps d'explorer des techniques avancées qui peuvent porter vos graphiques au niveau supérieur.
+
+## Sprites SVG pour de meilleures performances
+
+Au lieu de charger plusieurs fichiers SVG, combinez-les en un sprite :
+
+```xml
+<svg style="display: none;">
+  <symbol id="icon-home" viewBox="0 0 24 24">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+  </symbol>
+  <symbol id="icon-user" viewBox="0 0 24 24">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+  </symbol>
+</svg>
+
+<!-- Utiliser les icônes -->
+<svg class="icon">
+  <use href="#icon-home"/>
+</svg>
+```
+
+## Animations CSS avec SVG
+
+Animez les propriétés SVG en utilisant le CSS :
+
+```css
+.animated-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 2s forwards;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+```
+
+## Filtres SVG pour effets visuels
+
+Créez des effets époustouflants avec les filtres SVG :
+
+```xml
+<svg>
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <circle cx="50" cy="50" r="30" filter="url(#glow)"/>
+</svg>
+```
+
+## SVG responsive avec viewBox
+
+Rendez le SVG responsive tout en maintenant le ratio d'aspect :
+
+```xml
+<svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+  <!-- contenu -->
+</svg>
+```
+
+## SVG inline vs Fichiers externes
+
+### Avantages du SVG inline
+
+- Aucune requête HTTP
+- Peut être stylisé avec CSS
+- Peut être animé avec JavaScript
+- Meilleur pour les graphiques critiques
+
+### Avantages du SVG externe
+
+- Mise en cache du navigateur
+- Réutilisable entre les pages
+- HTML plus propre
+- Meilleur pour les graphiques non critiques
+
+## Meilleures pratiques de performance
+
+1. **Minimisez la complexité des chemins** - moins de points = rendu plus rapide
+2. **Utilisez `<use>` pour les éléments répétés** - réduit la taille du DOM
+3. **Optimisez avec SVGO** - supprime les données inutiles
+4. **Envisagez le chargement différé** - pour les SVGs sous le pli
+5. **Utilisez les transformations CSS** - accélération matérielle
+
+## Considérations d'accessibilité
+
+Rendez vos SVG accessibles :
+
+```xml
+<svg role="img" aria-labelledby="title desc">
+  <title id="title">Logo de l'entreprise</title>
+  <desc id="desc">Un cercle bleu avec du texte blanc</desc>
+  <!-- contenu -->
+</svg>
+```
+
+## Intégration JavaScript
+
+Manipulez le SVG avec JavaScript :
+
+```javascript
+const circle = document.querySelector('circle');
+circle.setAttribute('r', 50);
+circle.style.fill = 'red';
+
+// Animer avec GSAP ou d'autres bibliothèques
+gsap.to(circle, {
+  attr: { r: 100 },
+  duration: 1
+});
+```
+
+## Conclusion
+
+Le SVG est un format puissant avec des possibilités infinies. En maîtrisant ces techniques avancées, vous pouvez créer des graphiques performants, accessibles et visuellement époustouflants pour le web.
+
+Continuez à expérimenter et n'oubliez pas d'optimiser vos fichiers SVG avec Tiny SVG !
