@@ -56,7 +56,7 @@ const homeContent = {
           zh: "无需上传到服务器。所有处理都在您的浏览器本地进行，保护您的文件隐私",
           ko: "서버 업로드가 필요 없습니다. 모든 처리는 브라우저 내에서 로컬로 이루어져 파일의 개인정보를 보호합니다",
           de: "Keine Server-Uploads erforderlich. Die gesamte Verarbeitung erfolgt lokal in Ihrem Browser und schützt Ihre Dateien",
-          fr: "Aucun serveur requis. Tout le traitement se fait localement dans votre navigateur, gardant vos fichiers privés",
+          fr: "Aucun serveur requis. Tout le traitement se fait localement dans votre navigateur, vos fichiers restent chez vous",
         }),
       },
       preview: {
@@ -72,7 +72,7 @@ const homeContent = {
           zh: "通过并排比较和代码差异查看器即时查看结果",
           ko: "나란히 비교 및 코드 차이 뷰어로 즉시 결과 확인",
           de: "Sehen Sie die Ergebnisse sofort mit Seite-an-Seite-Vergleich und Code-Diff-Viewer",
-          fr: "Voyez les résultats instantanément avec une comparaison côte à côte et un visualiseur de différences de code",
+          fr: "Visualisez instantanément les résultats en comparant les données avant/après et en utilisant un visualiseur de différences de code"
         }),
       },
     },
