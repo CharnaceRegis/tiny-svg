@@ -85,7 +85,7 @@ export function getSvgDimensions(
 }
 
 // Re-export from svg-core for backward compatibility
-export { formatSize as formatFileSize } from "@tiny-svg/svg-core";
+export { formatSize as formatFileSize } from "@tiny-svg/svg";
 
 export function formatTimestamp(timestamp: number): string {
   const date = new Date(timestamp);

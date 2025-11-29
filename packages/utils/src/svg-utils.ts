@@ -1,6 +1,5 @@
 /**
  * SVG utility functions
- * Extracted from apps/web/src/lib/svg-utils.ts
  */
 
 export function generateSvgThumbnail(

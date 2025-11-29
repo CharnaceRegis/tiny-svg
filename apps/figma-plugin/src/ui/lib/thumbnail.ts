@@ -3,7 +3,7 @@
  * Uses shared @tiny-svg/export-utils for canvas operations
  */
 
-import { createCanvasFromSvg, getSvgDimensions } from "@tiny-svg/export-utils";
+import { createCanvasFromSvg, getSvgDimensions } from "@tiny-svg/utils";
 
 export async function generateThumbnail(
   svg: string,

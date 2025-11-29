@@ -1,5 +1,5 @@
 {
-  "name": "@tiny-svg/svg-core",
+  "name": "@tiny-svg/utils",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -19,10 +19,6 @@
     "build": "tsdown",
     "dev": "tsdown --watch",
     "check-types": "tsc --noEmit"
-  },
-  "dependencies": {
-    "svgo": "^3.3.2",
-    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^22.13.11",

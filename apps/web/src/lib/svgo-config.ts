@@ -32,4 +32,4 @@ export const buildSvgoConfig = (
 export {
   calculateCompressionRatio as calculateCompressionRate,
   formatSize as formatBytes,
-} from "@tiny-svg/svg-core";
+} from "@tiny-svg/svg";

@@ -1,10 +1,7 @@
 /**
- * Shared file utility functions for SVG export
- * Extracted from apps/web/src/lib/file-utils.ts for reuse in Figma plugin
+ * Image export utilities
  */
 
-// Constants
-const SVG_MIME_TYPE = "image/svg+xml";
 const SVG_BLOB_TYPE = "image/svg+xml;charset=utf-8";
 const SVG_NAMESPACE = "http://www.w3.org/2000/svg";
 const PNG_MIME_TYPE = "image/png";
@@ -21,47 +18,7 @@ const DEFAULT_ICO_SIZES = [16, 32, 48, 64];
 const VIEWBOX_SPLIT_PATTERN = /[\s,]+/;
 const VIEWBOX_VALUES_COUNT = 4;
 
-// ============================================================================
-// Generic File Utils
-// ============================================================================
-
-export const downloadFile = (
-  content: string,
-  fileName: string,
-  mimeType = "text/plain;charset=utf-8"
-): void => {
-  const blob = new Blob([content], { type: mimeType });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-};
-
-export const downloadBlob = (blob: Blob, fileName: string): void => {
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = fileName;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(link.href);
-};
-
-export const downloadSvg = (svg: string, fileName: string): void => {
-  downloadFile(svg, fileName, SVG_MIME_TYPE);
-};
-
-export const copyToClipboard = async (text: string): Promise<void> => {
-  await navigator.clipboard.writeText(text);
-};
-
-// ============================================================================
-// SVG Utils
-// ============================================================================
+import { downloadBlob } from "./download";
 
 export const addXmlnsToSvg = (svg: string): string => {
   const xmlnsAttr = `xmlns="${SVG_NAMESPACE}"`;
@@ -82,11 +39,9 @@ export const getSvgDimensions = (
     return { width: DEFAULT_DIMENSION, height: DEFAULT_DIMENSION };
   }
 
-  // Try to get width and height attributes
   let width: string | null = svgElement.getAttribute("width");
   let height: string | null = svgElement.getAttribute("height");
 
-  // If width/height are not present, try to get from viewBox
   if (!(width && height)) {
     const viewBox = svgElement.getAttribute("viewBox");
     if (viewBox) {
@@ -98,7 +53,6 @@ export const getSvgDimensions = (
     }
   }
 
-  // Parse dimensions, removing units like 'px', 'pt', etc.
   const parseSize = (size: string | null): number => {
     if (!size) {
       return DEFAULT_DIMENSION;
@@ -110,7 +64,6 @@ export const getSvgDimensions = (
   const parsedWidth = parseSize(width);
   const parsedHeight = parseSize(height);
 
-  // Scale up if dimensions are too small (less than MIN_EXPORT_DIMENSION)
   const scale = Math.max(
     1,
     MIN_EXPORT_DIMENSION / Math.max(parsedWidth, parsedHeight)
@@ -121,10 +74,6 @@ export const getSvgDimensions = (
     height: Math.round(parsedHeight * scale),
   };
 };
-
-// ============================================================================
-// Canvas Utils
-// ============================================================================
 
 export const createCanvasFromSvg = async (
   svg: string,
@@ -149,7 +98,6 @@ export const createCanvasFromSvg = async (
     throw new Error("Could not get canvas context");
   }
 
-  // Fill background if specified
   if (backgroundColor) {
     ctx.fillStyle = backgroundColor;
     ctx.fillRect(0, 0, finalCanvasWidth, finalCanvasHeight);
@@ -217,10 +165,6 @@ export const canvasToBlob = async (
       quality
     );
   });
-
-// ============================================================================
-// Image Export Functions
-// ============================================================================
 
 export const exportAsPng = async (
   svg: string,
@@ -300,7 +244,6 @@ export const exportAsIco = async (
   const height =
     customHeight && customHeight > 0 ? customHeight : svgDimensions.height;
 
-  // For ICO, use a square canvas with the largest dimension
   const size = Math.max(width, height, Math.max(...DEFAULT_ICO_SIZES));
 
   const canvas = await createCanvasFromSvg(svg, width, height, {
@@ -313,10 +256,6 @@ export const exportAsIco = async (
     ICO_MIME_TYPE
   );
 };
-
-// ============================================================================
-// Export to Blob (for batch operations)
-// ============================================================================
 
 export const svgToPngBlob = async (
   svg: string,

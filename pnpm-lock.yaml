@@ -78,15 +78,12 @@ importers:
       '@tiny-svg/code-generators':
         specifier: workspace:*
         version: link:../../packages/code-generators
-      '@tiny-svg/export-utils':
+      '@tiny-svg/svg':
         specifier: workspace:*
-        version: link:../../packages/export-utils
-      '@tiny-svg/svg-core':
+        version: link:../../packages/svg
+      '@tiny-svg/utils':
         specifier: workspace:*
-        version: link:../../packages/svg-core
-      '@tiny-svg/svgo-plugins':
-        specifier: workspace:*
-        version: link:../../packages/svgo-plugins
+        version: link:../../packages/utils
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -226,12 +223,9 @@ importers:
       '@tiny-svg/code-generators':
         specifier: workspace:*
         version: link:../../packages/code-generators
-      '@tiny-svg/svg-core':
+      '@tiny-svg/svg':
         specifier: workspace:*
-        version: link:../../packages/svg-core
-      '@tiny-svg/svgo-plugins':
-        specifier: workspace:*
-        version: link:../../packages/svgo-plugins
+        version: link:../../packages/svg
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -405,6 +399,18 @@ importers:
         specifier: ^7.3.0
         version: 7.4.0
 
+  packages/browser-utils:
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.11
+        version: 22.19.1
+      tsdown:
+        specifier: ^0.16.7
+        version: 0.16.7(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+
   packages/code-generators:
     devDependencies:
       '@types/node':
@@ -424,6 +430,25 @@ importers:
         version: 0.16.7(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
+        version: 5.9.3
+
+  packages/svg:
+    dependencies:
+      svgo:
+        specifier: ^3.3.2
+        version: 3.3.2
+      zustand:
+        specifier: ^5.0.2
+        version: 5.0.8(@types/react@19.2.7)(react@19.1.0)(use-sync-external-store@1.6.0(react@19.1.0))
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.11
+        version: 22.19.1
+      tsdown:
+        specifier: ^0.16.7
+        version: 0.16.7(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.3
         version: 5.9.3
 
   packages/svg-core:
@@ -450,6 +475,18 @@ importers:
       svgo:
         specifier: ^4.0.0
         version: 4.0.0
+    devDependencies:
+      '@types/node':
+        specifier: ^22.13.11
+        version: 22.19.1
+      tsdown:
+        specifier: ^0.16.7
+        version: 0.16.7(typescript@5.9.3)
+      typescript:
+        specifier: ^5.7.3
+        version: 5.9.3
+
+  packages/utils:
     devDependencies:
       '@types/node':
         specifier: ^22.13.11

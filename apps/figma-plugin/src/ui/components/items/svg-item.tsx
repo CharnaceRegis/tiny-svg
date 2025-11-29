@@ -1,3 +1,4 @@
+import { copyToClipboard, downloadSvg } from "@tiny-svg/utils";
 import { toast } from "sonner";
 import { Button } from "@/ui/components/base/button";
 import { BaseItem } from "@/ui/components/items/base-item";
@@ -12,7 +13,7 @@ export function SvgItem({ item, onPreview }: SvgItemProps) {
   const handleCopy = async () => {
     try {
       const svg = item.compressedSvg || item.originalSvg;
-      await navigator.clipboard.writeText(svg);
+      await copyToClipboard(svg);
       toast.success("SVG copied to clipboard");
     } catch (error) {
       console.error("Failed to copy SVG:", error);
@@ -23,15 +24,7 @@ export function SvgItem({ item, onPreview }: SvgItemProps) {
   const handleDownload = () => {
     try {
       const svg = item.compressedSvg || item.originalSvg;
-      const blob = new Blob([svg], { type: "image/svg+xml" });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `${item.name}.svg`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
+      downloadSvg(svg, `${item.name}.svg`);
       toast.success("SVG downloaded");
     } catch (error) {
       console.error("Failed to download SVG:", error);

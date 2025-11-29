@@ -1,3 +1,4 @@
+import { downloadBlob } from "@tiny-svg/utils";
 import JSZip from "jszip";
 import type { SvgItem } from "@/ui/store";
 
@@ -13,14 +14,7 @@ export async function exportAsZip(items: SvgItem[]): Promise<void> {
   }
 
   const blob = await zip.generateAsync({ type: "blob" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `svgs-${Date.now()}.zip`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  downloadBlob(blob, `svgs-${Date.now()}.zip`);
 }
 
 const SVG_MATCHER = /<svg[^>]*>([\s\S]*)<\/svg>/;
@@ -61,12 +55,5 @@ ${symbols}
   zip.file("metadata.json", JSON.stringify(metadata, null, 2));
 
   const blob = await zip.generateAsync({ type: "blob" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = `sprite-${Date.now()}.zip`;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+  downloadBlob(blob, `sprite-${Date.now()}.zip`);
 }

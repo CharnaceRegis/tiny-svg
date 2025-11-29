@@ -3,7 +3,7 @@
  * Reuses logic from @tiny-svg/export-utils
  */
 
-import { copyToClipboard } from "@tiny-svg/export-utils";
+import { copyToClipboard } from "@tiny-svg/utils";
 
 // Re-export the shared functions using export from
 export {
@@ -15,7 +15,7 @@ export {
   svgToJpegBlob,
   svgToPngBlob,
   svgToWebpBlob,
-} from "@tiny-svg/export-utils";
+} from "@tiny-svg/utils";
 
 // Copy image to clipboard (convert blob to clipboard item)
 export async function copyImageToClipboard(

@@ -1,5 +1,5 @@
 {
-  "name": "@tiny-svg/svgo-plugins",
+  "name": "@tiny-svg/svg",
   "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -21,7 +21,8 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "svgo": "^4.0.0"
+    "svgo": "^3.3.2",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@types/node": "^22.13.11",

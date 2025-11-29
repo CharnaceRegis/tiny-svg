@@ -1,6 +1,6 @@
 import type { PluginConfig } from "svgo";
-import { defaultGlobalSettings, defaultSvgoPlugins } from "./default-config.js";
-import type { CompressionPreset, PluginOverride, SvgoPreset } from "./types.js";
+import { defaultGlobalSettings, defaultSvgoPlugins } from "./default-config";
+import type { CompressionPreset, PluginOverride, SvgoPreset } from "./types";
 
 export const compressionPresets: CompressionPreset[] = [
   {

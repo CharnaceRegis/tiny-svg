@@ -1,4 +1,4 @@
-import type { SvgoGlobalSettings, SvgoPluginConfig } from "./types.js";
+import type { SvgoGlobalSettings, SvgoPluginConfig } from "./types";
 
 export const defaultGlobalSettings: SvgoGlobalSettings = {
   multipass: true,

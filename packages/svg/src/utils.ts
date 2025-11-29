@@ -1,4 +1,4 @@
-import type { SvgState } from "./types.js";
+import type { SvgState } from "./types";
 
 export function calculateCompressionRatio(
   original: string,

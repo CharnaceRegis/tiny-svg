@@ -1,7 +1,7 @@
 import {
   compressionPresets,
   getPresetConfig as getSharedPresetConfig,
-} from "@tiny-svg/svgo-plugins";
+} from "@tiny-svg/svg";
 import type { Config } from "svgo";
 import type { Preset } from "@/types/messages";
 
@@ -21,8 +21,8 @@ export function getDefaultPresets(): Preset[] {
       description: preset.description,
       icon: preset.icon,
       isDefault: true,
-      svgoConfig: config?.config || { plugins: [] },
-      createdAt: Date.now() - index * 1000, // Ensure consistent ordering
+      svgoConfig: (config?.config || { plugins: [] }) as Config,
+      createdAt: Date.now() - index * 1000,
       updatedAt: Date.now() - index * 1000,
     };
   });
