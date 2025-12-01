@@ -71,3 +71,5 @@ export function PreviewDrawer() {
     </Sheet>
   );
 }
+
+export default PreviewDrawer;

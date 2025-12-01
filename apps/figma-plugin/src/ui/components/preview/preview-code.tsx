@@ -4,9 +4,9 @@ import {
   DEFAULT_DIFF_PARSE_OPTIONS,
   generateUnifiedDiff,
 } from "@tiny-svg/ui/lib/diff-utils";
+import { highlight } from "@tiny-svg/ui/lib/syntax-highlight";
 import { copyToClipboard } from "@tiny-svg/utils";
 import React, { useCallback, useEffect, useState } from "react";
-import { refractor } from "refractor/all";
 import { toast } from "sonner";
 import { usePluginStore } from "@/ui/store";
 
@@ -16,38 +16,6 @@ interface PreviewCodeProps {
   onCodeDataChange?: (data: any) => void;
   wrapLines?: boolean;
   maxLineWidth?: number | "auto";
-}
-
-function hastToReact(
-  node: ReturnType<typeof refractor.highlight>["children"][number],
-  key: string
-): React.ReactNode {
-  if (node.type === "text") {
-    return node.value;
-  }
-  if (node.type === "element") {
-    const { tagName, properties, children } = node;
-    return React.createElement(
-      tagName,
-      {
-        key,
-        className: (properties.className as string[] | undefined)?.join(" "),
-      },
-      children.map((c, i) => hastToReact(c, `${key}-${i}`))
-    );
-  }
-  return null;
-}
-
-function highlight(code: string, lang: string): React.ReactNode[] {
-  try {
-    const id = `${lang}:${code}`;
-    const tree = refractor.highlight(code, lang);
-    const nodes = tree.children.map((c, i) => hastToReact(c, `${id}-${i}`));
-    return nodes;
-  } catch {
-    return [code];
-  }
 }
 
 function CodeViewer({
@@ -70,11 +38,32 @@ function CodeViewer({
 }) {
   const [displayCode, setDisplayCode] = useState(code);
   const [isPrettified, setIsPrettified] = useState(false);
+  const [highlightedLines, setHighlightedLines] = useState<
+    Map<number, React.ReactNode[]>
+  >(new Map());
 
   useEffect(() => {
     setDisplayCode(code);
     setIsPrettified(false);
+    setHighlightedLines(new Map());
   }, [code]);
+
+  // Highlight code lines asynchronously
+  useEffect(() => {
+    const codeLines = displayCode.split("\n");
+    const highlightPromises = codeLines.map(async (line, index) => {
+      const nodes = await highlight(line || " ", "xml");
+      return { index, nodes };
+    });
+
+    Promise.all(highlightPromises).then((results) => {
+      const newMap = new Map<number, React.ReactNode[]>();
+      for (const { index, nodes } of results) {
+        newMap.set(index, nodes);
+      }
+      setHighlightedLines(newMap);
+    });
+  }, [displayCode]);
 
   // Notify parent of state changes
   useEffect(() => {
@@ -133,6 +122,10 @@ function CodeViewer({
         <tbody className="box-border w-full">
           {codeLines.map((line, index) => {
             const lineKey = `line-${index}-${line.slice(0, LINE_KEY_PREVIEW_LENGTH)}`;
+            const highlightedNodes = highlightedLines.get(index) || [
+              line || " ",
+            ];
+
             return (
               <tr
                 className="box-border h-5 min-h-5 whitespace-pre-wrap border-none"
@@ -143,14 +136,14 @@ function CodeViewer({
                   {index + 1}
                 </td>
                 <td
-                  className={wrapLines ? "break-all pr-3" : "text-nowrap pr-6"}
+                  className={wrapLines ? "break-all pr-6" : "text-nowrap pr-6"}
                 >
                   <span
                     className={
                       wrapLines ? "whitespace-pre-wrap" : "whitespace-pre"
                     }
                   >
-                    {highlight(line || " ", "xml").map((node, idx) => {
+                    {highlightedNodes.map((node, idx) => {
                       const nodeKey = `${lineKey}-node-${idx}`;
                       return (
                         <React.Fragment key={nodeKey}>{node}</React.Fragment>

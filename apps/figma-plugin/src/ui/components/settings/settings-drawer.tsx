@@ -107,3 +107,5 @@ export function SettingsDrawer() {
     </Drawer>
   );
 }
+
+export default SettingsDrawer;

@@ -1,15 +1,24 @@
 import { Button } from "@tiny-svg/ui/components/button";
+import { lazy, Suspense } from "react";
 import { Toaster } from "sonner";
 import { EmptyState } from "@/ui/components/empty-state";
 import { Footer } from "@/ui/components/footer";
 import { Header } from "@/ui/components/header";
 import { SvgItem } from "@/ui/components/items/svg-item";
 import { PluginLayout } from "@/ui/components/layout/plugin-layout";
-import { PresetEditorDrawer } from "@/ui/components/preset/preset-editor-drawer";
-import { PreviewDrawer } from "@/ui/components/preview/preview-drawer";
-import { SettingsDrawer } from "@/ui/components/settings/settings-drawer";
 import { useFigmaMessages } from "@/ui/hooks/use-figma-messages";
 import { usePluginStore } from "@/ui/store";
+
+// Lazy load heavy components that are not always needed
+const PresetEditorDrawer = lazy(
+  () => import("@/ui/components/preset/preset-editor-drawer")
+);
+const PreviewDrawer = lazy(
+  () => import("@/ui/components/preview/preview-drawer")
+);
+const SettingsDrawer = lazy(
+  () => import("@/ui/components/settings/settings-drawer")
+);
 
 export function PluginApp() {
   const {
@@ -84,9 +93,11 @@ export function PluginApp() {
         )}
       </PluginLayout>
 
-      <SettingsDrawer />
-      <PresetEditorDrawer />
-      <PreviewDrawer />
+      <Suspense fallback={null}>
+        <SettingsDrawer />
+        <PresetEditorDrawer />
+        <PreviewDrawer />
+      </Suspense>
       <Toaster position="bottom-center" />
     </>
   );

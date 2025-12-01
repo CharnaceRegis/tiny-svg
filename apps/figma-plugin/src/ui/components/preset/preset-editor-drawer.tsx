@@ -420,3 +420,5 @@ export function PresetEditorDrawer() {
     </>
   );
 }
+
+export default PresetEditorDrawer;
