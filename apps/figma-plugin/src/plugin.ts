@@ -24,8 +24,8 @@ import type {
 // Constants
 // ============================================================================
 
-const UI_WIDTH = 400;
-const UI_HEIGHT = 600;
+const UI_WIDTH = 380;
+const UI_HEIGHT = 540;
 const SELECTION_DEBOUNCE_MS = 150;
 
 // ============================================================================
