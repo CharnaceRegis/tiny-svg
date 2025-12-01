@@ -112,6 +112,7 @@ export function AboutTab() {
               </ItemContent>
               <ItemActions>
                 <Button
+                  className="h-7 rounded-lg px-3 py-1 hover:border-accent"
                   onClick={() => setShowResetDialog(true)}
                   variant="outline"
                 >

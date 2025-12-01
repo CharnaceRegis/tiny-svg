@@ -2,7 +2,7 @@ import { Button } from "@tiny-svg/ui/components/button";
 import { Toaster } from "sonner";
 import { EmptyState } from "@/ui/components/empty-state";
 import { Footer } from "@/ui/components/footer";
-import { Header } from "@/ui/components/Header";
+import { Header } from "@/ui/components/header";
 import { SvgItem } from "@/ui/components/items/svg-item";
 import { PluginLayout } from "@/ui/components/layout/plugin-layout";
 import { PresetEditorDrawer } from "@/ui/components/preset/preset-editor-drawer";

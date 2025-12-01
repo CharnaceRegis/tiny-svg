@@ -34,11 +34,14 @@ export function DeleteConfirmationDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel className="flex-1" type="button">
+          <AlertDialogCancel
+            className="h-7 flex-1 rounded-lg py-1 hover:border-accent"
+            type="button"
+          >
             取消
           </AlertDialogCancel>
           <AlertDialogAction
-            className="flex-1"
+            className="h-7 flex-1 rounded-lg py-1"
             onClick={onConfirm}
             variant="destructive"
           >

@@ -236,12 +236,12 @@ export function PresetEditorDrawer() {
         <DrawerContent className="h-screen w-full! max-w-full!">
           <DrawerHeader className="flex items-center justify-between border-b px-4 py-3">
             <div className="flex items-center gap-1.5">
-              <DrawerTitle className="font-semibold">
+              <DrawerTitle className="font-semibold text-base">
                 {presetEditor.mode === "edit" ? "编辑" : "创建"}
               </DrawerTitle>
               <DrawerDescription className="sr-only">Preset</DrawerDescription>
               <Input
-                className="max-w-36"
+                className="h-7 max-w-36 rounded-lg px-2 py-1"
                 id="preset-name"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setName(e.target.value);
@@ -254,9 +254,12 @@ export function PresetEditorDrawer() {
               )}
             </div>
             <div className="flex items-center gap-2">
-              <Button onClick={handleSave}>保存</Button>
+              <Button className="h-7 rounded-lg px-3 py-1" onClick={handleSave}>
+                保存
+              </Button>
               {presetEditor.mode === "edit" && !isDefaultPreset && (
                 <Button
+                  className="h-7 rounded-lg px-3 py-1"
                   onClick={() => {
                     setShowDeleteDialog(true);
                   }}
@@ -266,7 +269,11 @@ export function PresetEditorDrawer() {
                 </Button>
               )}
               <DrawerClose asChild>
-                <Button size="icon" variant="outline">
+                <Button
+                  className="size-7 rounded-lg hover:border-accent"
+                  size="icon"
+                  variant="outline"
+                >
                   <span className="i-hugeicons-cancel-01 size-4" />
                 </Button>
               </DrawerClose>
@@ -318,7 +325,7 @@ export function PresetEditorDrawer() {
                       </p>
                     </div>
                     <Input
-                      className="w-20"
+                      className="h-7 w-20 rounded-lg px-2 py-1"
                       id="float-precision"
                       max={10}
                       min={0}
@@ -351,7 +358,7 @@ export function PresetEditorDrawer() {
                       </p>
                     </div>
                     <Input
-                      className="w-20"
+                      className="h-7 w-20 rounded-lg px-2 py-1"
                       id="transform-precision"
                       max={10}
                       min={0}

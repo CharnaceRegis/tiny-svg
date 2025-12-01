@@ -40,7 +40,16 @@ function buildPluginCode() {
 }
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), viteSingleFile(), buildPluginCode()],
+  plugins: [
+    react({
+      babel: {
+        plugins: ["babel-plugin-react-compiler"],
+      },
+    }),
+    tailwindcss(),
+    viteSingleFile(),
+    buildPluginCode(),
+  ],
   root: resolve(__dirname, "src/ui"),
   resolve: {
     alias: {

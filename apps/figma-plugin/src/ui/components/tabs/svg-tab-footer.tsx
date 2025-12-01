@@ -50,16 +50,27 @@ export function SvgTabFooter() {
         onValueChange={(value) => setSvgExportFormat(value as "zip" | "sprite")}
         value={selectedSvgExportFormat}
       >
-        <SelectTrigger className="w-16">
+        <SelectTrigger className="w-16 rounded-lg px-2 py-1" size="xs">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="zip">Zip</SelectItem>
-          <SelectItem value="sprite">Sprite Sheet</SelectItem>
+        <SelectContent className="rounded-lg">
+          <SelectItem className="rounded-md py-1 pr-4 pl-1 text-xs" value="zip">
+            Zip
+          </SelectItem>
+          <SelectItem
+            className="rounded-md py-1 pr-4 pl-1 text-xs"
+            value="sprite"
+          >
+            Sprite Sheet
+          </SelectItem>
         </SelectContent>
       </Select>
 
-      <Button disabled={!hasItems || isExporting} onClick={handleExportAll}>
+      <Button
+        className="h-7 rounded-lg px-3 py-1"
+        disabled={!hasItems || isExporting}
+        onClick={handleExportAll}
+      >
         {isExporting ? "Exporting..." : "Export All"}
       </Button>
     </>

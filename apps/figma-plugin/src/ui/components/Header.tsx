@@ -25,21 +25,31 @@ export function Header() {
         onValueChange={(value) => setActiveTab(value as TabType)}
         value={activeTab}
       >
-        <TabsList>
-          <TabsTrigger value="svg">SVG</TabsTrigger>
-          <TabsTrigger value="image">Image</TabsTrigger>
-          <TabsTrigger value="code">Code</TabsTrigger>
+        <TabsList className="h-auto p-0.5">
+          <TabsTrigger className="px-2 py-0.5" value="svg">
+            SVG
+          </TabsTrigger>
+          <TabsTrigger className="px-2 py-0.5" value="image">
+            Image
+          </TabsTrigger>
+          <TabsTrigger className="px-2 py-0.5" value="code">
+            Code
+          </TabsTrigger>
         </TabsList>
       </Tabs>
 
       <div className="flex items-center gap-2">
         <Select onValueChange={setGlobalPreset} value={globalPreset}>
-          <SelectTrigger className="w-[140px]">
+          <SelectTrigger className="w-[120px] rounded-lg px-2 py-1" size="xs">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="min-w-[120px] rounded-lg">
             {presets.map((preset) => (
-              <SelectItem key={preset.id} value={preset.id}>
+              <SelectItem
+                className="rounded-md py-1 pr-4 pl-1 text-xs"
+                key={preset.id}
+                value={preset.id}
+              >
                 {preset.name}
               </SelectItem>
             ))}
@@ -48,6 +58,7 @@ export function Header() {
 
         <Button
           aria-label="Settings"
+          className="size-7 rounded-lg hover:border-accent"
           onClick={toggleSettings}
           size="icon"
           title="Settings"

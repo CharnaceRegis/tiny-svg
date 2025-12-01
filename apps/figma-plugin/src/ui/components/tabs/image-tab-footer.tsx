@@ -37,6 +37,7 @@ export function ImageTabFooter() {
       </div>
 
       <Button
+        className="h-7 rounded-lg px-3 py-1"
         disabled={!(hasItems && hasFormats) || isExporting}
         onClick={handleExportAll}
       >

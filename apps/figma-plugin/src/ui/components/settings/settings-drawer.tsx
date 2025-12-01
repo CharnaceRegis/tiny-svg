@@ -45,22 +45,29 @@ export function SettingsDrawer() {
           value={activeTab}
         >
           {/* Header with Title and Tabs */}
-          <DrawerHeader className="flex items-center justify-between border-b px-4 py-3">
+          <DrawerHeader className="flex items-center justify-between border-b px-4 py-2">
             <div className="flex items-center gap-3">
-              <DrawerTitle className="font-semibold">Settings</DrawerTitle>
+              <DrawerTitle className="font-semibold text-base">
+                Settings
+              </DrawerTitle>
               <DrawerDescription className="sr-only">
                 Settings
               </DrawerDescription>
 
-              <TabsList>
-                <TabsTrigger value="presets">预设</TabsTrigger>
-                <TabsTrigger value="about">关于</TabsTrigger>
+              <TabsList className="h-auto p-0.5">
+                <TabsTrigger className="px-2 py-0.5" value="presets">
+                  预设
+                </TabsTrigger>
+                <TabsTrigger className="px-2 py-0.5" value="about">
+                  关于
+                </TabsTrigger>
               </TabsList>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {activeTab === "presets" && (
                 <Button
+                  className="h-7 rounded-lg px-3 py-1"
                   onClick={handleCreatePreset}
                   type="button"
                   variant="default"
@@ -72,6 +79,7 @@ export function SettingsDrawer() {
               <DrawerClose asChild>
                 <Button
                   aria-label="关闭"
+                  className="size-7 rounded-lg hover:border-accent"
                   size="icon"
                   title="关闭"
                   type="button"
@@ -84,11 +92,14 @@ export function SettingsDrawer() {
           </DrawerHeader>
 
           {/* Tabs Content */}
-          <TabsContent className="h-[calc(100dvh-53px)] flex-1" value="presets">
+          <TabsContent
+            className="mt-0 h-[calc(100dvh-53px)] flex-1"
+            value="presets"
+          >
             <PresetsTab />
           </TabsContent>
 
-          <TabsContent className="flex-1" value="about">
+          <TabsContent className="mt-0 flex-1" value="about">
             <AboutTab />
           </TabsContent>
         </Tabs>

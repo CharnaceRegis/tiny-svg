@@ -37,19 +37,27 @@ export function CodeTabFooter() {
         onValueChange={(value) => setCodeFormat(value as CodeFormat)}
         value={selectedCodeFormat}
       >
-        <SelectTrigger className="w-20">
+        <SelectTrigger className="w-20 rounded-lg px-2 py-1" size="xs">
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent className="rounded-lg">
           {formats.map((format) => (
-            <SelectItem key={format.value} value={format.value}>
+            <SelectItem
+              className="rounded-md py-1 pr-4 pl-1 text-xs"
+              key={format.value}
+              value={format.value}
+            >
               {format.label}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Button disabled={!hasItems || isExporting} onClick={handleExportAll}>
+      <Button
+        className="h-7 rounded-lg px-3 py-1"
+        disabled={!hasItems || isExporting}
+        onClick={handleExportAll}
+      >
         {isExporting ? "Exporting..." : "Export All"}
       </Button>
     </>

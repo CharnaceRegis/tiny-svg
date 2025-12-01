@@ -152,6 +152,7 @@ export function PresetListItem({
               <TooltipTrigger asChild>
                 <Button
                   aria-label="删除"
+                  className="hover:bg-destructive hover:text-destructive-foreground"
                   disabled={preset.isDefault}
                   onClick={handleDelete}
                   size="icon-sm"

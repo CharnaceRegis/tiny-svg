@@ -118,16 +118,25 @@ export function BaseItem({
           {showPresetSelector && (
             <Select onValueChange={handlePresetChange} value={item.preset}>
               <SelectTrigger
-                className="w-fit"
+                className="w-fit rounded-lg px-2 py-0"
                 onClick={(e) => e.stopPropagation()}
-                size="sm"
+                size="xxs"
               >
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="inherit">Inherit</SelectItem>
+              <SelectContent className="rounded-lg">
+                <SelectItem
+                  className="rounded-md py-1 pr-4 pl-1 text-xs"
+                  value="inherit"
+                >
+                  Inherit
+                </SelectItem>
                 {presets.map((preset) => (
-                  <SelectItem key={preset.id} value={preset.id}>
+                  <SelectItem
+                    className="rounded-md py-1 pr-4 pl-1 text-xs"
+                    key={preset.id}
+                    value={preset.id}
+                  >
                     {preset.name}
                   </SelectItem>
                 ))}

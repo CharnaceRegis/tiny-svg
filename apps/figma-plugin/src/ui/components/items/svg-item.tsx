@@ -36,6 +36,7 @@ export function SvgItem({ item, onPreview }: SvgItemProps) {
     <div className="flex gap-1">
       <Button
         aria-label="Copy SVG"
+        className="size-7 rounded-lg"
         onClick={handleCopy}
         size="icon"
         title="Copy SVG"
@@ -45,6 +46,7 @@ export function SvgItem({ item, onPreview }: SvgItemProps) {
       </Button>
       <Button
         aria-label="Download SVG"
+        className="size-7 rounded-lg"
         onClick={handleDownload}
         size="icon"
         title="Download SVG"
